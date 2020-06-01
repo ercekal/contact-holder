@@ -11,13 +11,11 @@ const Contact = require('../models/Contact')
 router.get('/', auth, async (req, res) => {
   try {
     const contacts = await Contact.find({user: req.user.id}).sort({date: -1})
-    res.json(contacts)
-    return res.status(500).send('server error');
-
+    return res.json(contacts)
   } catch (err) {
     console.log('error: ', err.message);
+    return res.status(500).send('server error');
   }
-  return res.send('Get all contacts')
 })
 
 // @route POST api/contacts
@@ -84,7 +82,6 @@ router.put('/:id', auth, async (req, res) => {
     console.log('err: ', err.message);
     return res.status(500).json({ msg: 'server error' });
   }
-  return res.send('Update contact')
 })
 
 // @route DELETE api/contacts
