@@ -1,15 +1,25 @@
 import React, { useState, useContext, useEffect } from 'react';
 import ContactContext from '../../context/contact/contactContext';
 
+const EMPTY_CONTACT = {
+  name: '',
+  email: '',
+  phone: '',
+  type: 'personal'
+}
 const ContactForm = () => {
   const contactContext = useContext(ContactContext)
-  const [contact, setContact] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    type: 'personal'
-  });
+  const {current, addContact, updateContact, clearCurrent} = contactContext
+  const [contact, setContact] = useState(EMPTY_CONTACT);
   const { name, email, phone, type } = contact;
+
+  useEffect(() => {
+    if(current !== null) {
+      setContact(current)
+    } else {
+      setContact(EMPTY_CONTACT);
+    }
+  }, [current])
 
   const onChange = e => {
     setContact({...contact, [e.target.name]: e.target.value})
@@ -17,20 +27,18 @@ const ContactForm = () => {
 
   const onSubmit = e => {
     e.preventDefault()
-    contactContext.addContact(contact)
-    setContact({
-      name: '',
-      email: '',
-      phone: '',
-      type: 'personal'
-    });
+    current ? updateContact(contact) : addContact(contact)
+    setContact(EMPTY_CONTACT);
+  }
+
+  const clearAll = () => {
+    clearCurrent()
   }
 
   return (
     <form onSubmit={onSubmit}>
       <h2 className='text-primary'>
-        {/* {current ? 'Edit Contact' : 'Add Contact'} */}
-        Add Contact
+        {current ? 'Edit Contact' : 'Add Contact'}
       </h2>
       <input
         type='text'
@@ -73,16 +81,18 @@ const ContactForm = () => {
       <div>
         <input
           type='submit'
-          // value={current ? 'Update Contact' : 'Add Contact'}
-          value={'Add Contact'}
+          value={current ? 'Update Contact' : 'Add Contact'}
           className='btn btn-primary btn-block'
         />
+        {current && (
+          <div>
+            <button className='btn btn-light btn-block' onClick={clearAll}>
+              Clear
+            </button>
+          </div>
+        )}
       </div>
     </form>
   )
 }
 export default ContactForm;
-
-  // const contactContext = useContext(ContactContext);
-
-  // const { addContact, updateContact, clearCurrent, current } = contactContext;

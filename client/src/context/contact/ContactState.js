@@ -49,15 +49,46 @@ const ContactState = props => {
   const [state, dispatch] = useReducer(contactReducer, initialState)
   const addContact = contact => {
     contact.id = uuid()
-    console.log('contact: ', contact);
     dispatch({ type: ADD_CONTACT, payload: contact})
   }
+
+  const updateContact = contact => {
+    dispatch({ type: UPDATE_CONTACT, payload: contact})
+  }
+
+  const setCurrent = contact => {
+    dispatch({ type: SET_CURRENT, payload: contact})
+  }
+
+  const clearCurrent = () => {
+    dispatch({ type: CLEAR_CURRENT})
+  }
+
+  const deleteContact = contactId => {
+    dispatch({ type: DELETE_CONTACT, payload: contactId})
+  }
+
+  const filterContacts = text => {
+    dispatch({ type: FILTER_CONTACTS, payload: text})
+  }
+
+  const clearFilter = text => {
+    dispatch({ type: CLEAR_FILTER})
+  }
+
 
   return (
     <ContactContext.Provider
       value={{
         contacts: state.contacts,
-        addContact
+        current: state.current,
+        addContact,
+        setCurrent,
+        clearCurrent,
+        updateContact,
+        filterContacts,
+        clearFilter,
+        deleteContact
       }}
     >
       {props.children}
