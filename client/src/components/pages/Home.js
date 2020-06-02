@@ -7,11 +7,11 @@ const Home = () => {
   return (
     <div className='grid-2'>
       <div>
-        <ContactFilter />
         <ContactForm />
       </div>
       <div>
-       <Contacts />
+        <ContactFilter />
+        <Contacts />
       </div>
     </div>
   );

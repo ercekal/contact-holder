@@ -40,11 +40,12 @@ export default (state, action) => {
         contacts: state.contacts.filter(c => c.id !== action.payload)
       }
     case FILTER_CONTACTS:
-      const filtereds = state.contacts.filter(c => Object.values(c).includes(action.payload))
-      console.log('filtereds: ', filtereds);
       return {
         ...state,
-        filtered: state.contacts.filter(c => Object.values(c).includes(action.payload))
+        filtered: state.contacts.filter(contact => {
+          const regex = new RegExp(`${action.payload}`, 'gi');
+          return contact.name.match(regex) || contact.email.match(regex);
+        })
       }
     case CLEAR_FILTER:
       return {
