@@ -16,6 +16,16 @@ const Register = props => {
     password2: ''
   });
 
+  useEffect(() => {
+    if (isAuthenticated) {
+      props.history.push('/');
+    }
+    if (error !== null) {
+      setAlert(error, 'danger')
+      clearErrors()
+    }
+  }, [error, isAuthenticated, props.history]);
+
   const { name, email, password, password2 } = user;
 
   const onChange = e => {
@@ -29,7 +39,7 @@ const Register = props => {
     } else if (password !== password2) {
       setAlert('Passwords do not match', 'danger');
     } else {
-      authContext.registerUser({name, email, password})
+      authContext.register({name, email, password})
     }
   };
 
