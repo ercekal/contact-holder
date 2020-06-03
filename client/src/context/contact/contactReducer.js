@@ -59,6 +59,11 @@ export default (state, action) => {
         }),
         loading: false
       }
+    case CONTACT_ERROR:
+      return {
+        ...state,
+        error: action.payload
+      }
     case CLEAR_FILTER:
       return {
         ...state,
