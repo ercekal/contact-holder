@@ -13,7 +13,7 @@ const connectDB = async () => {
     console.log('mongo db connected')
   } catch (err) {
     console.log(err.msg)
-    process.exit(13)
+    process.exit()
   }
 }
 
