@@ -42,8 +42,6 @@ router.post('/', [auth, [
       phone,
       user: req.user.id
     })
-
-    console.log('contact: ', newContact);
     await newContact.save()
     res.json(newContact)
   } catch (err) {
