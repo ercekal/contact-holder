@@ -9,17 +9,17 @@ const Login = props => {
   const { setAlert } = alertContext;
   const { login, error, clearErrors, isAuthenticated } = authContext;
 
-  // useEffect(() => {
-  //   if (isAuthenticated) {
-  //     props.history.push('/');
-  //   }
+  useEffect(() => {
+    if (isAuthenticated) {
+      props.history.push('/');
+    }
 
-  //   if (error === 'Invalid Credentials') {
-  //     setAlert(error, 'danger');
-  //     clearErrors();
-  //   }
-  //   // eslint-disable-next-line
-  // }, [error, isAuthenticated, props.history]);
+    if (error === 'Invalid Credentials') {
+      setAlert(error, 'danger');
+      clearErrors();
+    }
+    // eslint-disable-next-line
+  }, [error, isAuthenticated, props.history]);
 
   const [user, setUser] = useState({
     email: '',
@@ -32,14 +32,14 @@ const Login = props => {
 
   const onSubmit = e => {
     e.preventDefault();
-    // if (email === '' || password === '') {
-      // setAlert('Please fill in all fields', 'danger');
-    // } else {
+    if (email === '' || password === '') {
+      setAlert('Please fill in all fields', 'danger');
+    } else {
       login({
         email,
         password
       });
-    // }
+    }
   };
 
   return (
